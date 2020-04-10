@@ -26,8 +26,8 @@ artist_table_create = (""" CREATE TABLE IF NOT EXISTS artists (artist_id varchar
                                                                latitude decimal , longitude decimal)
 """)
 
-time_table_create = (""" CREATE TABLE IF NOT EXISTS time (start_time timestamp, hour int, day int, week int, \
-                                                          month int, year int, weekday boolean)
+time_table_create = (""" CREATE TABLE IF NOT EXISTS time (time_stamp timestamp, hour int, day int, weekofyear int, \
+                                                          month int, year int, weekday int)
 """)
 
 # INSERT RECORDS
@@ -54,14 +54,14 @@ artist_table_insert = (""" INSERT INTO artists (artist_id, name, location, \
 """)
 
 
-time_table_insert = (""" INSERT INTO time (start_time, hour, day, week, \
+time_table_insert = (""" INSERT INTO time (time_stamp, hour, day, weekofyear, \
                                            month, year, weekday) \
                         VALUES (%s, %s, %s, %s, %s, %s, %s)
 """)
 
 # FIND SONGS
 
-song_select = (""" 
+song_select = (""" SELECT FROM songs WHERE song_id=%s
 """)
 
 # QUERY LISTS
