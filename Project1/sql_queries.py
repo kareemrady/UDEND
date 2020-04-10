@@ -8,10 +8,11 @@ time_table_drop = "DROP TABLE IF EXISTS time"
 
 # CREATE TABLES
 
-songplay_table_create = (""" CREATE TABLE IF NOT EXISTS songplays (songplay_id int, start_time timestamp, \
+songplay_table_create = (""" CREATE TABLE IF NOT EXISTS songplays (time_stamp bigint, \
                                                                   user_id int, level varchar,\
                                                                   song_id varchar, artist_id varchar,\
-                                                                  session_id int, location varchar, user_agent varchar)
+                                                                  session_id int, location varchar, \
+                                                                  user_agent varchar)
 """)
 
 user_table_create = (""" CREATE TABLE IF NOT EXISTS users (user_id int, first_name varchar,\
@@ -19,7 +20,7 @@ user_table_create = (""" CREATE TABLE IF NOT EXISTS users (user_id int, first_na
 """)
 
 song_table_create = (""" CREATE TABLE IF NOT EXISTS songs (song_id varchar, title varchar, artist_id varchar, \
-                                                           year int, duration real)
+                                                           year int, duration decimal)
 """)
 
 artist_table_create = (""" CREATE TABLE IF NOT EXISTS artists (artist_id varchar, name varchar, location varchar, \
@@ -32,10 +33,10 @@ time_table_create = (""" CREATE TABLE IF NOT EXISTS time (time_stamp bigint, hou
 
 # INSERT RECORDS
 
-songplay_table_insert = (""" INSERT INTO songplays (songplay_id, start_time, user_id, level,\
-                                                    song_id, artist_id, session_id,\
-                                                    location, user_agent) \
-                             VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+songplay_table_insert = (""" INSERT INTO songplays (song_id, artist_id,\
+                                                    time_stamp, user_id, level,\
+                                                    session_id, location, user_agent) \
+                             VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
 """)
 
 user_table_insert = (""" INSERT INTO users (user_id, first_name,\
@@ -61,7 +62,13 @@ time_table_insert = (""" INSERT INTO time (time_stamp, hour, day, weekofyear, \
 
 # FIND SONGS
 
-song_select = (""" SELECT * FROM songs WHERE song_id=%s
+song_select = (""" SELECT s.song_id, a.artist_id
+                   FROM songs s
+                   JOIN artists a
+                   ON s.artist_id = a.artist_id
+                   WHERE s.title = %s 
+                   AND a.name = %s
+                   AND s.duration = %s ;
 """)
 
 # QUERY LISTS
