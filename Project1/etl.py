@@ -10,18 +10,20 @@ def process_song_file(cur, filepath):
     READS a SongFile, inserts a record in the Songs & Artists DB
     Takes 2 inputs:
     cur (psycopg2 Cursor Object)
-    filepath   (str) FilePath of a songfile
+    filepath   (str) FilePath of a songfiles
     """
     # open song file
     df = pd.read_json(filepath, lines=True)
     # insert song record
     song_data_df = df[["song_id", "title", "artist_id", "year", "duration"]]
-    song_data = song_data_df.values.tolist()
-    cur.execute(song_table_insert, song_data)
+    song_data = song_data_df.values
+    song_data_list = list(song_data)
+    cur.execute(song_table_insert, song_data_list)
     # insert artist record
     artist_data = df[["artist_id", "artist_name", "artist_location",
                       "artist_latitude",
-                      "artist_longitude"]].fillna(0).values.tolist()
+                      "artist_longitude"]].fillna(0).values
+    artist_data_list = list(artist_data)
     cur.execute(artist_table_insert, artist_data)
 
 
@@ -30,7 +32,7 @@ def process_log_file(cur, filepath):
     READS a Log File and Inserts Data in Time, users and sogplays DB
     Takes 2 inputs:
     cur (psycopg2 Cursor Object)
-    filepath   (str) FilePath of a logfile
+    filepath   (str) FilePath of a logfiles
     """
     # open log file
     df = pd.read_json(filepath, lines=True)
@@ -105,7 +107,7 @@ def main():
     conn = psycopg2.connect(connection_str_sparkify)
     cur = conn.cursor()
 
-    process_data(cur, conn, filepath='data/song_data', func=process_song_file)
+    process_data(cur, conn, filepath='/data/song_data', func=process_song_file)
     process_data(cur, conn, filepath='data/log_data', func=process_log_file)
 
     conn.close()
