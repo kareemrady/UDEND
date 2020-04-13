@@ -16,15 +16,15 @@ def process_song_file(cur, filepath):
     df = pd.read_json(filepath, lines=True)
     # insert song record
     song_data_df = df[["song_id", "title", "artist_id", "year", "duration"]]
-    song_data = song_data_df.values
-    song_data_list = list(song_data)
-    cur.execute(song_table_insert, song_data_list)
+    song_data = song_data_df.values.tolist()
+    for row_song in song_data:
+        cur.execute(song_table_insert, row_song)
     # insert artist record
     artist_data = df[["artist_id", "artist_name", "artist_location",
                       "artist_latitude",
-                      "artist_longitude"]].fillna(0).values
-    artist_data_list = list(artist_data)
-    cur.execute(artist_table_insert, artist_data)
+                      "artist_longitude"]].fillna(0).values.tolist()
+    for row_artist in artist_data:
+        cur.execute(artist_table_insert, row_artist)
 
 
 def process_log_file(cur, filepath):
@@ -61,7 +61,7 @@ def process_log_file(cur, filepath):
     # insert songplay records
     for _, row in df.iterrows():
         # get songid and artistid from song and artist tables
-        cur.execute(song_select, (row.song, row.artist, row.length))
+        cur.execute(song_select, (row.song.replace("'", "''"), row.artist.replace("'", "''"), row.length))
         results = cur.fetchone()
         if results:
             songid, artistid = results
@@ -107,7 +107,7 @@ def main():
     conn = psycopg2.connect(connection_str_sparkify)
     cur = conn.cursor()
 
-    process_data(cur, conn, filepath='/data/song_data', func=process_song_file)
+    process_data(cur, conn, filepath='data/song_data', func=process_song_file)
     process_data(cur, conn, filepath='data/log_data', func=process_log_file)
 
     conn.close()
