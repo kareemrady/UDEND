@@ -1,7 +1,8 @@
 ## POJECT 1
 ### MODELING DB WITH POSTGRES
 
-<div style="width: 640px; height: 480px; margin: 10px; position: relative;"><iframe allowfullscreen frameborder="0" style="width:640px; height:480px" src="https://www.lucidchart.com/documents/embeddedchart/30fff48a-0ad6-4268-93b1-9a0f1eb5b9b0" id="OSBPfrGeLpvy"></iframe></div>
+Fact & Dimensions Table:
+![alt text](https://www.lucidchart.com/publicSegments/view/18f92e71-d445-47cd-bf78-1dc7b658a0d1/image.png) "Fact & Dimensions Table P1"
 
 #### STEPS TO RUN PROJECT:
 1. RUN create_tables.py file to create all DB tables
