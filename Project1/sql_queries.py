@@ -17,27 +17,28 @@ songplay_table_create = """
                                           user_agent varchar) """
 # USERS Table Create Statement
 user_table_create = """
-    CREATE TABLE IF NOT EXISTS users (user_id int PRIMARY KEY,
+    CREATE TABLE IF NOT EXISTS users (user_id int PRIMARY KEY NOT NULL,
                                       first_name varchar,
                                       last_name varchar,
                                       gender char,
-                                      level varchar) """
+                                      level varchar NOT NULL) """
 # Songs Table Create Statement
 song_table_create = """
-    CREATE TABLE IF NOT EXISTS songs (song_id varchar PRIMARY KEY,
-                                      title varchar,
-                                      artist_id varchar, year int,
-                                      duration decimal) """
+    CREATE TABLE IF NOT EXISTS songs (song_id varchar PRIMARY KEY NOT NULL,
+                                      title varchar NOT NULL,
+                                      artist_id varchar NOT NULL, year int,
+                                      duration decimal NOT NULL) """
 # Artists Table Create Statement
 artist_table_create = """
-    CREATE TABLE IF NOT EXISTS artists (artist_id varchar PRIMARY KEY,
-                                        name varchar, location varchar,
+    CREATE TABLE IF NOT EXISTS artists (artist_id varchar PRIMARY KEY NOT NULL,
+                                        name varchar NOT NULL,
+                                        location varchar,
                                         latitude decimal,
                                         longitude decimal) """
 # Time Table Create Statement
 time_table_create = """
-    CREATE TABLE IF NOT EXISTS time (time_start bigint, hour int, day int,
-                                     weekofyear int, month int,
+    CREATE TABLE IF NOT EXISTS time (time_start bigint NOT NULL, hour int,
+                                     day int, weekofyear int, month int,
                                      year int, weekday int) """
 # INSERT RECORDS
 # Time Table Insert Statement
