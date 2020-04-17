@@ -49,4 +49,5 @@ EX: song_data/A/B/C/TRABCEI128F424C983.json
 #### STEPS TO RUN PROJECT:
 1. RUN create_tables.py file to create all DB tables
 2. RUN etl.py file to insert all records in the tables
+3. Run test.ipynb to cehcek the DBs created and run queries against the created tables
 
