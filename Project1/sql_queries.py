@@ -10,27 +10,29 @@ time_table_drop = "DROP TABLE IF EXISTS time"
 # Songplays Table Create Statement
 songplay_table_create = """
     CREATE TABLE IF NOT EXISTS songplays (songplays_id SERIAL PRIMARY KEY,
-                                          time_start bigint,
-                                          user_id int, level varchar,
-                                          song_id varchar, artist_id varchar,
+                                          time_start bigint NOT NULL,
+                                          user_id int NOT NULL,
+                                          level varchar NOT NULL,
+                                          song_id varchar,
+                                          artist_id varchar,
                                           session_id int, location varchar,
                                           user_agent varchar) """
 # USERS Table Create Statement
 user_table_create = """
-    CREATE TABLE IF NOT EXISTS users (user_id int PRIMARY KEY NOT NULL,
+    CREATE TABLE IF NOT EXISTS users (user_id int PRIMARY KEY,
                                       first_name varchar,
                                       last_name varchar,
                                       gender char,
                                       level varchar NOT NULL) """
 # Songs Table Create Statement
 song_table_create = """
-    CREATE TABLE IF NOT EXISTS songs (song_id varchar PRIMARY KEY NOT NULL,
+    CREATE TABLE IF NOT EXISTS songs (song_id varchar PRIMARY KEY,
                                       title varchar NOT NULL,
-                                      artist_id varchar NOT NULL, year int,
-                                      duration decimal NOT NULL) """
+                                      artist_id varchar NOT NULL , year int,
+                                      duration decimal ) """
 # Artists Table Create Statement
 artist_table_create = """
-    CREATE TABLE IF NOT EXISTS artists (artist_id varchar PRIMARY KEY NOT NULL,
+    CREATE TABLE IF NOT EXISTS artists (artist_id varchar PRIMARY KEY,
                                         name varchar NOT NULL,
                                         location varchar,
                                         latitude decimal,

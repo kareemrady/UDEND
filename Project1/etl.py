@@ -61,7 +61,8 @@ def process_log_file(cur, filepath):
     # insert songplay records
     for _, row in df.iterrows():
         # get songid and artistid from song and artist tables
-        cur.execute(song_select, (row.song.replace("'", "''"), row.artist.replace("'", "''"), row.length))
+        cur.execute(song_select, (row.song.replace("'", "''"),
+                                  row.artist.replace("'", "''"), row.length))
         results = cur.fetchone()
         if results:
             songid, artistid = results
